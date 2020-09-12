@@ -1,109 +1,51 @@
 const prompt = require('prompt-sync')({sigint: true});
 import Item from './Item';
-const IMPORTTAX:number=0.05;
-const TAX:number=0.1;
+import {MainPrompt} from './helpers/Constants';
+import { fetchDataFromFile} from './helpers/fileFunctions';
+import {getItemsManually} from './helpers/manualFunctions'
+import {countTotalQuantityPerItem, isErr, printReciept} from './helpers/commonFunctions';
 
-const printReciept=(mapObject,totalPriceBeforeTax:number,totalSalesTax:number)=>{
-  const totalPriceAfterTax:number=totalPriceBeforeTax+totalSalesTax;
-  mapObject.forEach((value,key)=>{
-    let multQuantity=value.totalQuantity>1?` (${value.totalQuantity} @ ${value.unitPrice}`:''
-    console.log(key+' : '+value.totalQuantity*value.unitPrice+multQuantity);
-  })
-  console.log('Sales Tax : '+totalSalesTax);
-  console.log('Total : '+totalPriceAfterTax);
-}
 
-const countTotalQuantityPerItem=(items:Item[])=>{
-  // have to count quantity for items with same name and isImported
-  let totalPriceBeforeTax=0;
-  let totalSalesTax=0;
-  let quantCountMap=new Map();
-  items.forEach((item:Item)=>{
-    totalPriceBeforeTax+=item.quantity*item.unitPrice;
-    totalSalesTax+=item.quantity*item.unitPrice*TAX;
-    if (item.isImported){ //item is imported
-      totalSalesTax+=item.quantity*item.unitPrice*IMPORTTAX;
-      if (quantCountMap.has('Imported '+item.name))  quantCountMap.get('Imported ' + item.name).totalQuantity += item.quantity;
-      else quantCountMap.set('Imported '+item.name,{totalQuantity:item.quantity,unitPrice:item.unitPrice});
+ function fileFlow(filePath:string){
+   const items: any = fetchDataFromFile(filePath);
+   if (isErr(items)) { //check if path is correct or file has acceptable format
+     main(items + " " + MainPrompt); // re-enter main function wih error message
+     return
+   }
+   return items;    //if everything is good, get the items from file
+ }
+
+
+
+ function main(MainPrompt:string){
+   let items:Item[];
+  let filePath:string=process.argv[2]; //get filepath from command lin args
+  if (filePath){      //check if filepath is entered on command line
+    items=fileFlow(filePath) //then get items from fileFlow
+  }
+  else{
+    //if filepath not found ask if user wants to provide file or enter data manually
+    let flowInput:string = prompt(MainPrompt);
+    switch (flowInput) {
+      case '1':  // user chose to provide file path
+        filePath=prompt("enter the file name or path relative to main.js : ");
+        items=fileFlow(filePath);
+        break;
+      case '2':
+        items=getItemsManually();
+        break;
+      default:
+        main('Incorrect Input! \n' + MainPrompt);
+        return;
     }
-    else{ //item is not imported
-      if(quantCountMap.has(item.name)) quantCountMap.get(item.name).totalQuantity+=item.quantity;
-      else quantCountMap.set(item.name,{totalQuantity:item.quantity,unitPrice:item.unitPrice});
-    }
-  });
-  printReciept(quantCountMap,totalPriceBeforeTax,Number((Math.round(totalSalesTax*20)/20).toFixed(2)));
-}
-const getItems=()=>{
-  let items:Item[]=new Array();
-  let input = prompt("want to add an item? press y/Y else n/N : ");
-  while(input.match(/y|Y/)){
-    items.push(getItem());
-    input = prompt("want to add an item? press y/Y else n/N : ");
   }
-  countTotalQuantityPerItem(items);
+    const { quantCountMap, totalPriceBeforeTax, totalSalesTax } = countTotalQuantityPerItem(items);
+    printReciept(quantCountMap, totalPriceBeforeTax, totalSalesTax);
+
 }
 
-const getItem =():Item=>{
-  const name=getName();
-  const quantity=getQuantity();
-  const isImported=getIsImported();
-  const unitPrice=getUnitPrice();
-  return new Item(quantity,isImported,name,unitPrice);
-}
-const getName=():string=>{
-  let promptName="Enter the name of the Product : "
-  let name ;
-  do{
-    name= prompt(promptName);
-    promptName="Expected String, Recieved Number! "+promptName;
-  }
-  while(!isNaN(Number(name)));
-  console.log("name is " + name);
-  return name;
-}
-
-const getQuantity=():number=>{
-  let promptQuantity = "enter the Quantity : "
-  let quantity;
-  do {
-    quantity = prompt(promptQuantity);
-    promptQuantity= "Expected Number, Recieved String! " + promptQuantity;
-  }
-  while (isNaN(Number(quantity)));
-  return Number(quantity);
-}
-
-const getUnitPrice = ():number => {
-  let promptUnitPrice = "enter the UnitPrice  : "
-  let unitPrice ;
-  do {
-    unitPrice  = prompt(promptUnitPrice);
-    promptUnitPrice = "Expected Number, Recieved String! " + promptUnitPrice ;
-  }
-  while (isNaN(Number(unitPrice )));
-  console.log("UnitPrice  is " + unitPrice );
-  return Number(unitPrice );
-}
-
-const getIsImported = ():boolean => {
-  let promptIsImported:string = "is it Imported (Y/N) : "
-  let isImported;
-  do {
-    isImported = prompt(promptIsImported);
-    promptIsImported = "Enter Y/y for yes or N/n for no" + promptIsImported;
-  }
-  while (!(isImported.length === 1 && isImported.match(/y|Y|n|N/g)))
-  console.log("isImported is : ",isImported );
-  if (isImported.match(/y|Y/g)) return true;
-  return false;
-}
-
-
-function main(){
-  getItems();
-}
-
-main();
+//program starts here
+main(MainPrompt);
 
 
 
