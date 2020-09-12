@@ -1,0 +1,23 @@
+{
+  "name": "dealeron",
+  "version": "1.0.0",
+  "description": "coding assignment",
+  "main": "main.ts",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bharatvarmagit/DealerOnAssignment.git"
+  },
+  "author": "bharat",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bharatvarmagit/DealerOnAssignment/issues"
+  },
+  "homepage": "https://github.com/bharatvarmagit/DealerOnAssignment#readme",
+  "dependencies": {
+    "@types/node": "^14.10.1",
+    "prompt-sync": "^4.2.0"
+  }
+}
