@@ -2,6 +2,7 @@
 exports.__esModule = true;
 exports.getItemsManually = void 0;
 var Item_1 = require("../Item");
+var prompt = require('prompt-sync')({ sigint: true });
 exports.getItemsManually = function () {
     var items = new Array();
     var input = prompt("want to add an item? press y/Y else n/N : ");

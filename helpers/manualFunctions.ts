@@ -1,4 +1,5 @@
 import Item from "../Item";
+const prompt = require('prompt-sync')({ sigint: true });
 
 export const getItemsManually = () => {
   let items: Item[] = new Array();
