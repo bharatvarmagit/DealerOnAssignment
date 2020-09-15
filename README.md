@@ -10,12 +10,12 @@ coding assignment for 2nd Problem.
   when user enters n/N when prompts asks user if user wants to add items. it will generate the reciept
   
 ### Assumptions:
-  user provides 
+  #### user provides 
   1. name : string
   2. quantity: number
   3. isImported: string (y/Y for true and n/N for false) converted to boolean
   4. unitPrice: number
-  file should have this format for each line: 
+  #### file should have this format for each line: 
   1. should have minimun of three strings 
   2. each line can contain at most info about one unique item name
   3. quantity is the first string
@@ -24,16 +24,17 @@ coding assignment for 2nd Problem.
   7. cannot have any symbols or strings other than "at" to indicate price. (see sample lines Below)
   6 can enter an item multiple times in different lines 
   
-  sample1:  2 imported Apple at 3.49
-  sample2: 1 apple 5.5
-  sample 3 Imported apple 5.99
+      sample1:  2 imported Apple at 3.49
+      sample2: 1 apple 5.5
+      sample 3 Imported apple 5.99
 
-## run `npm i` to install packages and run `node main` to run the main program
+## run `npm i` to install packages 
 
 if you dont have typesript 
 
 ## run `npm i -g typescript`
 
-## run `npm test` before you compile beacuse the import will have name conflicts with js and ts files having same name after tsc transpiles to js
+before you compile beacuse the import will have name conflicts with js and ts files having same name after tsc transpiles to js
+## run `npm test`
 
 ## run `tsc main && node main` 
