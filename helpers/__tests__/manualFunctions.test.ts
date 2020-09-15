@@ -1,5 +1,6 @@
 export {}
-import {getQuantity,getName,getIsImported} from '../manualFunctions'
+import {getQuantity,getName,getIsImported,getItem,getUnitPrice} from '../manualFunctions'
+
 
 jest.mock('prompt-sync');
 const prompt = require('prompt-sync');
@@ -76,5 +77,21 @@ describe("test getIsImported input", () => {
   })
 })
 
-
-
+describe("test get item",()=>{
+  it("test getItem",()=>{
+    //name
+    prompt.mockImplementationOnce(()=>"apple")
+    //quantity
+    prompt.mockImplementationOnce(() => 2)
+    //isImported
+    prompt.mockImplementationOnce(() => "n")
+    //unitPrice
+    prompt.mockImplementationOnce(() => 2.49)
+    const item = {
+      quantity: 2,
+      isImported: false,
+      name: "apple",
+      unitPrice: 2.49 }
+    expect(getItem()).toEqual(item);
+  })
+})
