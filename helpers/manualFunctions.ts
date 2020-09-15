@@ -21,12 +21,12 @@ export const getItemsManually = () => {
 }
  export const getName = (): string => {
   let promptName = "Enter the name of the Product : "
-  let name;
+  let name:string;
   do {
     name = prompt(promptName);
     promptName = "Expected String, Recieved Number! " + promptName;
   }
-  while (!isNaN(Number(name)));
+  while (!isNaN(Number(name))|| !name);
   return name;
 }
 
@@ -37,7 +37,7 @@ export const getItemsManually = () => {
     quantity = prompt(promptQuantity);
     promptQuantity = "Expected Number, Recieved String! " + promptQuantity;
   }
-  while (isNaN(Number(quantity)));
+  while (isNaN(Number(quantity))|| !quantity);
   return Number(quantity);
 }
 
@@ -48,7 +48,7 @@ export const getItemsManually = () => {
     unitPrice = prompt(promptUnitPrice);
     promptUnitPrice = "Expected Number, Recieved String! " + promptUnitPrice;
   }
-  while (isNaN(Number(unitPrice)));
+  while (isNaN(Number(unitPrice))|| !unitPrice);
   return Number(unitPrice);
 }
 
