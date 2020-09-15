@@ -19,7 +19,7 @@ describe("test getQuantity",()=>{
     expect(getQuantity()).toEqual(42);
   })
 
-  it("recieves", () => {
+  it("recieves correct input first time", () => {
     prompt.mockImplementationOnce(() => "21");
     //shouldnt be called second time
     prompt.mockImplementationOnce(() => "42");
