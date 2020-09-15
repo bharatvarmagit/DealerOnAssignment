@@ -24,9 +24,9 @@ coding assignment for 2nd Problem.
   7. cannot have any symbols or strings other than "at" to indicate price. (see sample lines Below)
   6 can enter an item multiple times in different lines 
   
-      sample1:  2 imported Apple at 3.49
-      sample2: 1 apple 5.5
-      sample 3 Imported apple 5.99
+      * sample 1:  2 imported Apple at 3.49
+      * sample 2:  1 apple 5.5
+      * sample 3:  Imported apple 5.99
 
 ## run `npm i` to install packages 
 
