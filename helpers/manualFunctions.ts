@@ -1,5 +1,5 @@
 import Item from "../Item";
-const prompt = require('prompt-sync')({ sigint: true });
+const prompt = require('prompt-sync');
 
 export const getItemsManually = () => {
   let items: Item[] = new Array();
@@ -11,7 +11,7 @@ export const getItemsManually = () => {
   return items;
 }
 
- const getItem = (): Item => {
+ export const getItem = (): Item => {
   let name: string = getName();
   const quantity = getQuantity();
   const isImported = getIsImported();
@@ -19,7 +19,7 @@ export const getItemsManually = () => {
   const unitPrice = getUnitPrice();
   return new Item(quantity, isImported, name, unitPrice);
 }
- const getName = (): string => {
+ export const getName = (): string => {
   let promptName = "Enter the name of the Product : "
   let name;
   do {
@@ -30,7 +30,7 @@ export const getItemsManually = () => {
   return name;
 }
 
- const getQuantity = (): number => {
+ export const getQuantity = (): number => {
   let promptQuantity = "enter the Quantity : "
   let quantity;
   do {
@@ -41,7 +41,7 @@ export const getItemsManually = () => {
   return Number(quantity);
 }
 
- const getUnitPrice = (): number => {
+ export const getUnitPrice = (): number => {
   let promptUnitPrice = "enter the UnitPrice  : "
   let unitPrice;
   do {
@@ -52,7 +52,7 @@ export const getItemsManually = () => {
   return Number(unitPrice);
 }
 
- const getIsImported = (): boolean => {
+ export const getIsImported = (): boolean => {
   let promptIsImported: string = "is it Imported (Y/N) : "
   let isImported;
   do {
