@@ -27,6 +27,8 @@ coding assignment for 2nd Problem.
       * sample 1:  2 imported Apple at 3.49
       * sample 2:  1 apple 5.5
       * sample 3:  Imported apple 5.99
+      
+ 
 
 ## run `npm i` to install packages 
 
